@@ -1,0 +1,153 @@
+  	{% if not resource.resources or resource.methods %}
+    <li>
+
+		<div class="collapsible-header waves-effect waves-indigo">
+	      	<span id="Name">{{resource.parentUrl}}{{ resource.displayName }}</span>
+			
+
+			{% set reso = (resource.displayName + resource.parentUrl) | replace('/','') | replace('{','') | replace('}','') %}
+
+	      	{% if resource.methods %}
+	      		{% for method in resource.methods %}
+	      			{% if method.method == "get"%}
+						<span class="chip badge indigo darken-1 white-text" style="text-transform: uppercase; padding: 0px 12px; height: 32px; line-height: 32px; font-size: 13px; margin-right:-5px; margin-bottom: 5px; margin-top: 5px; ">{{method.method}}</span>
+	      			{% elif method.method == "post" %}
+	      				<span class="chip badge teal lighten-2 white-text" style="text-transform: uppercase; padding: 0px 12px; height: 32px; line-height: 32px; font-size: 13px; margin-right:-5px; margin-bottom: 5px; margin-top: 5px; ">{{method.method}}</span>
+	      			{% endif %}
+
+	      			{% if method.displayName %}
+	      				<span class="chip">{{method.displayName}}</span>
+	      			{% endif %}
+	      		{% endfor %}
+			{% endif %}
+      	</div>
+
+	    
+		 
+		{% if resource.methods %}
+			{% for method in resource.methods %}
+			    {% if resource.description %}
+			    	{% if method.method == "get" %}
+		    			<div class="collapsible-body deep-purple lighten-3"><div class="chip" style="text-transform: uppercase; font-weight: bold;">{{method.method}}</div><br>
+		    			<span><b>Description:</b></span> {{ method.description }} <br>
+		    			{% elif method.method == "post" %}
+		    			<div class="collapsible-body teal lighten-4"><div class="chip" style="text-transform: uppercase;">{{method.method}}</div><br>
+		    			<span><b>Description:</b></span> {{ method.description }} <br>
+			    	{% endif %}
+	    		{% endif %}
+			
+					<div class="card">
+					    <div class="card-tabs">
+					      <ul class="tabs tabs-fixed-width">
+					        <li class="tab"><a class="active" href="#{{reso}}{{method.method}}">Request</a></li>
+					        <li class="tab"><a href="#{{reso}}{{method.method}}1">Response</a></li>
+					      </ul>
+					    </div>
+						<div class="card-content grey lighten-4">
+				      		<div id="{{reso}}{{method.method}}">
+				      			
+				      			{% if method.allUriParameters.length %}
+				      				<b class="blue-text darken-4-text">URI Parameters: </b><br>
+				      				{% for item in resource.allUriParameters %}
+										<p>{{item.key}} - {% if item.required == true %}(<b>required</b>)</p>{% endif %}
+										<p>{{ item.description }}</p>
+				      				{% endfor %}
+				      			{% endif %}
+
+				      			{% if method.headers %}
+				      				<b class="blue-text darken-4-text">Header: </b><br>
+						      		{% for head in method.headers%}
+						      				
+											<b>Name: </b> {{head.name}} {% if head.required == true %}(<b>required</b>)</p>{% endif %}
+											{% if head.enum %} <p><b>Values: </b> {{head.enum}}</p> {% endif %}
+											<p><b>Description:</b> {{head.description}}</p>
+											<p><b>Type: </b> {{head.type}}</p>
+											{% for exam in head.examples %}
+												<p><b>Example:</b> <pre class="language-markup grey lighten-2" style="padding:10px 5px;">{{exam.value}}</pre></p>
+											{% endfor %}
+									{% endfor %}
+									<br>
+								{% endif %}
+								
+
+								{% if method.body[0] %}<b class="blue-text darken-4-text">Body: </b><br>
+							      	{% if method.body[0].properties %}
+								      	{% for property in method.body[0].properties %}
+								      		<b>Name: </b> {{property.name}} {% if property.required == true %}(<b>required</b>)</p>{% endif %}
+								      		{% if property.enum %}<p><b>One of: </b> {{ property.enum }}</p> {% endif %}
+								      		<p><b>Description:</b> {{property.description}}
+						      				<p><b>Type:</b> {{property.type}}</p>
+											
+											{% for exam in property.examples %}
+												<p><b>Example:</b> <pre class="language-markup grey lighten-2" style="padding:10px 5px;">{{exam.value}}</pre></p>
+											{% endfor %}
+										{% endfor %}
+									{% endif %}
+								{% endif %}
+								
+							</div>
+					
+							<div id="{{reso}}{{method.method}}1">
+								<b class="blue-text darken-4-text">HTTP Status Codes:</b>
+								<div class="row">
+								    <div class="tabs-vertical">
+								        <div class="col s4 m4 l4">
+								            <ul class="tabs">
+										      	{% for resp in method.responses %}
+										      		{% for key, val in resp %}
+														{% if key=="code" %}
+															<li class="tab"><a href="#{{reso}}{{method.method}}{{val}}">{{val}}</a></li>
+														{% endif %}
+
+										      		{% endfor %}
+												{% endfor %}
+											</ul>
+										</div>
+									    <div class="col s8 m8 l8">
+									    	{% for resp in method.responses %}
+									        	<div id="{{reso}}{{method.method}}{{resp.code}}" class="tab-content">
+									        		{% if resp.description %}
+										            	<b>Description: </b> <p>{{resp.description}}</p>
+										            {% endif %}
+
+											      	{% for key, val in resp %}
+										            	{% if key=="body"%}
+										            		{% for body in val %}
+										            			{% for key,val in body %}
+										            				{% if key == "type" %}
+										            					<b>Type: </b><pre class="language-markup grey lighten-2" style="padding:10px 5px;">{{val}}</pre>
+										            				{% endif %}
+
+										            				{% if key == "examples" %}
+										            					<b>Example: </b>
+										            					{% for obj in val %}
+										            						{% for key, val in obj %}
+										            							{% if key=="value"%}
+										            								<pre class="language-markup grey lighten-2" style="padding:10px 5px;">{{val}}</pre>
+										            							{% endif %}
+										            						{% endfor %}
+										            					{% endfor %}
+										            				{% endif %}
+
+										            			{% endfor %}
+										            		{% endfor %}
+										            	{% endif %}
+													{% endfor %}
+												</div>
+											{% endfor %}
+									    </div>
+									</div>
+					    		</div>
+					    	</div>
+				 		</div>
+				 	</div>
+				</div>
+		    {% endfor %}
+		 {% endif %}
+    </li>
+    	
+    {% endif %}
+
+{% for resource in resource.resources %}
+	{% include "./resource.nunjucks" %}
+{% endfor %}

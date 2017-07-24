@@ -1,0 +1,122 @@
+<!DOCTYPE html><html><head><title>Department Of Labor Documentation</title><link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/css/materialize.min.css"><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>
+    .tabs-vertical .tabs {
+        height: auto;
+        -ms-flex-direction: column;
+        -webkit-flex-direction: column;
+        flex-direction: column; 
+      }
+      .tabs-vertical .tab {
+        width: 100%;
+        -webkit-box-flex: 1;
+        -webkit-flex-grow: 1;
+        -ms-flex-positive: 1;
+        flex-grow: 1;
+        display: block;
+        float: left;
+        text-align: left;
+        line-height: 48px;
+        height: 48px;
+        padding: 0;
+        margin: 0;
+        text-transform: uppercase;
+        text-overflow: ellipsis; 
+      }
+      .tabs-vertical .tab .active {
+        -moz-transition: border-color .5s ease;
+        -o-transition: border-color .5s ease;
+        -webkit-transition: border-color .5s ease;
+        transition: border-color .5s ease;
+        border-right: 3px solid #ee6e73;
+        color: #3f51b5; 
+      }
+      .tabs-vertical .tab a {
+        color: #3f51b5;
+        display: block;
+        width: 100%;
+        height: 100%;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        -webkit-transition: color 0.28s ease;
+        -moz-transition: color 0.28s ease;
+        -o-transition: color 0.28s ease;
+        -ms-transition: color 0.28s ease;
+        transition: color 0.28s ease; 
+      }
+      .tabs-vertical .tab a:hover {
+          color: #8591d5; 
+      }
+      .tabs-vertical .tab.disabled a {
+        color: #8591d5;
+        cursor: default; 
+      }
+      .tabs-vertical .indicator {
+        display: none; 
+      }
+  </style></head><body><ul id="slide-out" class="side-nav fixed"><li class="logo-header"><a class="waves-effect waves-light-blue brand-logo"><img style="max-width: 120px !important; padding-top: 10px;" src="http://www.open-logix.com/newsite/wp-content/uploads/2013/09/OLLogoSmall1.png" alt="open-logix"></a></li><li><a class="waves-effect waves-teal" href="#Getting-started">Introduction</a></li><li><a class="waves-effect waves-teal" href="#v1">version 1</a></li><li><a class="waves-effect waves-teal" href="#v1_casenumber__casenumber_">/casenumber/{caseNumber}</a></li><li><a class="waves-effect waves-teal" href="#v1_employee__employeename_">/employee/{employeeName}</a></li><li><a class="waves-effect waves-teal" href="#v1_employee">/employee</a></li><li><a class="waves-effect waves-teal" href="#v1_employecase">/employeCase</a></li></ul><div class="container" style="padding-left: 200px;"><div class="row"><div class="col s12 m9 l10"><div id="structure" class="section scrollspy"><h1>Department Of Labor API documentation</h1><p class="caption"><b>Base URI:</b> http://localhost:8008</p><br><ul class="collapsible popout m12 s12 l8" data-collapsible="accordion"><li><div class="collapsible-header waves-effect waves-indigo"><span id="Name">/v1/casenumber/{caseNumber}</span> <span class="chip badge indigo darken-1 white-text" style="text-transform: uppercase; padding: 0px 12px; height: 32px; line-height: 32px; font-size: 13px; margin-right:-5px; margin-bottom: 5px; margin-top: 5px;">get</span></div><div class="collapsible-body deep-purple lighten-3"><div class="chip" style="text-transform: uppercase; font-weight: bold;">get</div><br><span><b>Description:</b></span> GET employee Details<br><div class="card"><div class="card-tabs"><ul class="tabs tabs-fixed-width"><li class="tab"><a class="active" href="#casenumbercaseNumberv1get">Request</a></li><li class="tab"><a href="#casenumbercaseNumberv1get1">Response</a></li></ul></div><div class="card-content grey lighten-4"><div id="casenumbercaseNumberv1get"><b class="blue-text darken-4-text">URI Parameters:</b><br><p>caseNumber - (<b>required</b>)</p><p></p></div><div id="casenumbercaseNumberv1get1"><b class="blue-text darken-4-text">HTTP Status Codes:</b><div class="row"><div class="tabs-vertical"><div class="col s4 m4 l4"><ul class="tabs"><li class="tab"><a href="#casenumbercaseNumberv1get200">200</a></li><li class="tab"><a href="#casenumbercaseNumberv1get408">408</a></li></ul></div><div class="col s8 m8 l8"><div id="casenumbercaseNumberv1get200" class="tab-content"><b>Description:</b><p>Success</p><b>Type:</b><pre class="language-markup grey lighten-2" style="padding:10px 5px;">object</pre><b>Example:</b><pre class="language-markup grey lighten-2" style="padding:10px 5px;">{
+  "caseNumber": "I-200-17103-576342",
+  "postingDate": "04/13/2017",
+  "caseType": "H-1B",
+  "status": "Certified",
+  "businessName": "OPENLOGIX CORPORATION",
+  "startDate": "04/13/2017",
+  "endDate": "09/12/2019",
+  "jobTitle": "SOFTWARE ENGINEER",
+  "state": "CALIFORNIA",
+  "documentURL": "https://lcr-pjr.doleta.gov/index.cfm?event=ehLCJRExternal.dspCert&doc_id=3&visa_class_id=1&id=5329156"
+}</pre></div><div id="casenumbercaseNumberv1get408" class="tab-content"><b>Description:</b><p>Request Timeout</p><b>Type:</b><pre class="language-markup grey lighten-2" style="padding:10px 5px;">object</pre><b>Example:</b><pre class="language-markup grey lighten-2" style="padding:10px 5px;">{
+  "msg": "Try again later"
+}</pre></div></div></div></div></div></div></div></div></li><li><div class="collapsible-header waves-effect waves-indigo"><span id="Name">/v1/employee/{employeeName}</span> <span class="chip badge indigo darken-1 white-text" style="text-transform: uppercase; padding: 0px 12px; height: 32px; line-height: 32px; font-size: 13px; margin-right:-5px; margin-bottom: 5px; margin-top: 5px;">get</span></div><div class="collapsible-body deep-purple lighten-3"><div class="chip" style="text-transform: uppercase; font-weight: bold;">get</div><br><span><b>Description:</b></span> GET Employer details<br><div class="card"><div class="card-tabs"><ul class="tabs tabs-fixed-width"><li class="tab"><a class="active" href="#employeeemployeeNamev1get">Request</a></li><li class="tab"><a href="#employeeemployeeNamev1get1">Response</a></li></ul></div><div class="card-content grey lighten-4"><div id="employeeemployeeNamev1get"><b class="blue-text darken-4-text">URI Parameters:</b><br><p>employeeName - (<b>required</b>)</p><p></p></div><div id="employeeemployeeNamev1get1"><b class="blue-text darken-4-text">HTTP Status Codes:</b><div class="row"><div class="tabs-vertical"><div class="col s4 m4 l4"><ul class="tabs"><li class="tab"><a href="#employeeemployeeNamev1get200">200</a></li><li class="tab"><a href="#employeeemployeeNamev1get408">408</a></li></ul></div><div class="col s8 m8 l8"><div id="employeeemployeeNamev1get200" class="tab-content"><b>Type:</b><pre class="language-markup grey lighten-2" style="padding:10px 5px;">object</pre><b>Example:</b><pre class="language-markup grey lighten-2" style="padding:10px 5px;">[
+  {
+    "caseNumber": "I-200-17103-576342",
+    "postingDate": "04/13/2017",
+    "caseType": "H-1B",
+    "status": "Certified",
+    "businessName": "OPENLOGIX CORPORATION",
+    "startDate": "04/13/2017",
+    "endDate": "09/12/2019",
+    "jobTitle": "SOFTWARE ENGINEER",
+    "state": "CALIFORNIA",
+    "documentURL": "https://lcr-pjr.doleta.gov/index.cfm?event=ehLCJRExternal.dspCert&doc_id=3&visa_class_id=1&id=5329156"
+  }
+]</pre></div><div id="employeeemployeeNamev1get408" class="tab-content"><b>Description:</b><p>Request Timeout</p><b>Type:</b><pre class="language-markup grey lighten-2" style="padding:10px 5px;">object</pre><b>Example:</b><pre class="language-markup grey lighten-2" style="padding:10px 5px;">{
+  "msg": "Try again later"
+}</pre></div></div></div></div></div></div></div></div></li><li><div class="collapsible-header waves-effect waves-indigo"><span id="Name">/v1/employee</span> <span class="chip badge teal lighten-2 white-text" style="text-transform: uppercase; padding: 0px 12px; height: 32px; line-height: 32px; font-size: 13px; margin-right:-5px; margin-bottom: 5px; margin-top: 5px;">post</span></div><div class="collapsible-body teal lighten-4"><div class="chip" style="text-transform: uppercase;">post</div><br><span><b>Description:</b></span> Get employer details with dates<br><div class="card"><div class="card-tabs"><ul class="tabs tabs-fixed-width"><li class="tab"><a class="active" href="#employeev1post">Request</a></li><li class="tab"><a href="#employeev1post1">Response</a></li></ul></div><div class="card-content grey lighten-4"><div id="employeev1post"><b class="blue-text darken-4-text">Header:</b><br><b>Name:</b> startDate (<b>required</b>)<p></p><p><b>Description:</b> starting Date format mm/dd/yyyy</p><p><b>Type:</b> string</p><p><b>Example:</b><pre class="language-markup grey lighten-2" style="padding:10px 5px;">01/01/2017</pre></p><b>Name:</b> endDate (<b>required</b>)<p></p><p><b>Description:</b> starting Date format mm/dd/yyyy</p><p><b>Type:</b> string</p><p><b>Example:</b><pre class="language-markup grey lighten-2" style="padding:10px 5px;">01/01/2017</pre></p><b>Name:</b> employeeName (<b>required</b>)<p></p><p><b>Description:</b> Employer Name</p><p><b>Type:</b> string</p><p><b>Example:</b><pre class="language-markup grey lighten-2" style="padding:10px 5px;">openlogix</pre></p><br></div><div id="employeev1post1"><b class="blue-text darken-4-text">HTTP Status Codes:</b><div class="row"><div class="tabs-vertical"><div class="col s4 m4 l4"><ul class="tabs"><li class="tab"><a href="#employeev1post200">200</a></li><li class="tab"><a href="#employeev1post408">408</a></li></ul></div><div class="col s8 m8 l8"><div id="employeev1post200" class="tab-content"><b>Type:</b><pre class="language-markup grey lighten-2" style="padding:10px 5px;">object</pre><b>Example:</b><pre class="language-markup grey lighten-2" style="padding:10px 5px;">[
+  {
+    "caseNumber": "I-200-17103-576342",
+    "postingDate": "04/13/2017",
+    "caseType": "H-1B",
+    "status": "Certified",
+    "businessName": "OPENLOGIX CORPORATION",
+    "startDate": "04/13/2017",
+    "endDate": "09/12/2019",
+    "jobTitle": "SOFTWARE ENGINEER",
+    "state": "CALIFORNIA",
+    "documentURL": "https://lcr-pjr.doleta.gov/index.cfm?event=ehLCJRExternal.dspCert&doc_id=3&visa_class_id=1&id=5329156"
+  }
+]</pre></div><div id="employeev1post408" class="tab-content"><b>Description:</b><p>Request Timeout</p><b>Type:</b><pre class="language-markup grey lighten-2" style="padding:10px 5px;">object</pre><b>Example:</b><pre class="language-markup grey lighten-2" style="padding:10px 5px;">{
+  "msg": "Try again later"
+}</pre></div></div></div></div></div></div></div></div></li><li><div class="collapsible-header waves-effect waves-indigo"><span id="Name">/v1/employeCase</span> <span class="chip badge teal lighten-2 white-text" style="text-transform: uppercase; padding: 0px 12px; height: 32px; line-height: 32px; font-size: 13px; margin-right:-5px; margin-bottom: 5px; margin-top: 5px;">post</span></div><div class="collapsible-body teal lighten-4"><div class="chip" style="text-transform: uppercase;">post</div><br><span><b>Description:</b></span> Employer Details filtered by case type<br><div class="card"><div class="card-tabs"><ul class="tabs tabs-fixed-width"><li class="tab"><a class="active" href="#employeCasev1post">Request</a></li><li class="tab"><a href="#employeCasev1post1">Response</a></li></ul></div><div class="card-content grey lighten-4"><div id="employeCasev1post"><b class="blue-text darken-4-text">Header:</b><br><b>Name:</b> employeeName (<b>required</b>)<p></p><p><b>Description:</b> Employer Name</p><p><b>Type:</b> string</p><p><b>Example:</b><pre class="language-markup grey lighten-2" style="padding:10px 5px;">openlogix</pre></p><b>Name:</b> caseType (<b>required</b>)<p></p><p><b>Values:</b> All,PERM,H-1B,H-1B1 Chile,H-1B1 Singapore,E-3 Australian,H-2A,H-2B</p><p><b>Description:</b> Case Type can only be one of the following - All, PERM, H-1B, H-1B1 Chile, H-1B1 Singapore, E-3 Australian, H-2A, H-2B</p><p><b>Type:</b> string</p><p><b>Example:</b><pre class="language-markup grey lighten-2" style="padding:10px 5px;">All</pre></p><br></div><div id="employeCasev1post1"><b class="blue-text darken-4-text">HTTP Status Codes:</b><div class="row"><div class="tabs-vertical"><div class="col s4 m4 l4"><ul class="tabs"></ul></div><div class="col s8 m8 l8"></div></div></div></div></div></div></div></li></ul></div></div></div></div><script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/js/materialize.min.js"></script><script>
+  $(function(){
+    
+    $('.collapsible').collapsible({
+      onOpen: function(el){
+        var text = el.find('span.chip').text();
+        
+        if(text=="get"){
+          el.find('.collapsible-header').addClass("white lighten-2");
+          el.find('#Name').addClass("black-text");
+        } else{
+          el.find('.collapsible-header').addClass("white lighten-2");
+          el.find('#Name').addClass("black-text");
+        }
+      },
+      onClose: function(el){
+        el.find('.collapsible-header').removeClass("white lighten-2");
+        el.find('.collapsible-header').removeClass("white lighten-2");
+        el.find('#Name').removeClass("white-text");
+        el.find('#Name').removeClass("black-text");
+      }
+    });
+
+  });
+  </script></body></html>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>OpenLogix DOL API</title>
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/css/materialize.min.css">
+	<link rel="stylesheet" href="style.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body>
+	<nav>
+	    <div class="nav-wrapper container">
+	    	<a href="#!" class="brand-logo">OpenLogix</a>
+	    	<a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+	      	<ul class="right hide-on-med-and-down">
+	        	<li><a href="api.html">API</a></li>
+	      	</ul>
+	      	
+	      	<ul class="side-nav" id="mobile-demo">
+	        	<li><a href="api.html">API</a></li>
+	      	</ul>
+	    </div>
+	</nav>
+    
+	<div class="container">
+		<p style="font-size: 18px;">Labor Certification Registry</p>
+		<div class="card" style="padding: 10px 20px 10px 20px;">
+			<div class="row">
+				<form action="#" class="col s12 m12 l12">
+					<div class="row">
+						<div class="input-field col s12 m6 l6">
+							<input id="case_number" type="text" class="validate">
+							<label for="case_number">ETA Case Number</label>
+						</div>
+						<div class="input-field col s12 m6 l6">
+							<input id="employer_business_name" type="text" class="validate">
+							<label for="employer_business_name">Employer Name</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="input-field col s12 m6 l6">
+						    <select id="visa_class_id" name="visa_class_id">
+						      	<option value selected>All</option>
+						      	<option value="6">PERM</option>
+						      	<option value="1">H-1B</option>
+						      	<option value="2">H-1B1 Chile</option>
+						      	<option value="3">H-1B1 Singapore</option>
+						      	<option value="4">E-3 Australian</option>
+						      	<option value="8">H-2A</option>
+						      	<option value="7">H-2B</option>
+						    </select>
+						    <label>Case Type</label>
+						</div>
+					</div>
+					<div class="row">
+						<p style="margin-left: 10px;">Certification</p>
+						<div class="input-field col s12 m6 l6">
+							<label for="start_date_from">Start Date Range From</label>
+							<input id="start_date_from" type="date" class="datepicker">
+						</div>
+						<div class="input-field col s12 m6 l6">
+							<label for="start_date_to">Start Date Range To</label>
+							<input id="start_date_to" type="date" class="datepicker">
+						</div>
+					</div>
+					<button class="btn waves-effect waves-light" style="margin-left: 10px;" type="submit" name="action">Submit
+						<i class="material-icons right">send</i>
+					</button>
+				</form>
+			</div>
+		</div>
+
+		<div id="progressBar" class="progress">
+	    	<div class="indeterminate"></div>
+	  	</div>
+	</div>
+	
+	<div class="container">
+		<table id='table' class='table responsive-table highlight centered'>
+		</table>
+	</div>
+	
+	<br>
+	
+
+	<footer class="page-footer" style="background-color: #01579b;">
+    	<div class="container">
+        	<div class="row">
+          		<div class="col l6 s12">
+            		<h5 class="white-text">OpenLogix Corporation</h5>
+            		<p class="grey-text text-lighten-4">At OpenLogix, we have an awesome team of professionals that make things happen and we strive to provide a great experience for our customers, employees, and partners.</p>
+          		</div>
+        	</div>
+      	</div>
+      	<div class="footer-copyright" style="background-color: #0288d1;">
+        	<div class="container">
+        		© 2017 OpenLogix Corporation
+        		<a class="grey-text text-lighten-4 right" href="#!">O</a>
+        	</div>
+      	</div>
+    </footer>
+
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/js/materialize.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			$(".button-collapse").sideNav();
+			$('select').material_select();
+			$("#progressBar").hide();
+		});
+
+		$('.datepicker').pickadate({
+			format: 'mm/dd/yyyy',
+    		formatSubmit: 'yyyy/mm/dd',
+		    selectMonths: true,
+			selectYears: 15
+		});
+
+		function calling(resp){
+			console.log(resp);
+			$("tbody").empty();
+			$("thead").empty();
+			var id, doc_id = 3, visa_class_id;
+			var count = 0;
+			var employees = "<thead class='deep-purple white-text'><th>ID</th><th>ETA Case Number</th><th>Job Posting Date</th><th>Case Type</th><th>Status</th><th>Employer Name</th><th>Work Start Date</th><th>Work End Date</th><th>Job Title</th><th>State/Territory</th><th>visa_class_id</th><th>URL</th></thead><tbody>";
+			$.each(resp.ROWS, function(key, val){
+				employees += "<tr class=\"hoverable\">";
+				$.each(val, function(key1, val1){
+					count++;
+					if(val1 != ''){
+						if(count == 1){
+							id = val1;
+						} else if (count == 11){
+							visa_class_id = val1;
+						}
+
+						if(val1 == '<img src=\"/includes/images/Icon_html.gif\" border=\"0\" alt=\"HTML Redacted Certification\" title=\"HTML Redacted Certification\" />') {
+							val1 = "<a href='https://lcr-pjr.doleta.gov/index.cfm?event=ehLCJRExternal.dspCert&doc_id=3&visa_class_id=" +visa_class_id+"&id="+ id +"'><i class='material-icons'>description</i></a>";
+						}
+
+						employees += "<td>"+ val1 + "</td>";
+					}
+				});
+				employees += "</tr>";
+			});
+			employees +="</tbody>";
+			$(".table").append(employees);
+			Materialize.toast('success!', 2000, 'rounded');
+			$("#progressBar").hide();
+			return false;
+		}
+
+		$('form').submit(function(e){
+			e.preventDefault();
+			$("#progressBar").show();
+			var case_number = $("#case_number").val();
+			var startSearch = 1;
+			var employer_business_name = $("#employer_business_name").val();
+			var state_id = "all";
+			var sord = "desc";
+			var rows = 20;
+			var start_date_from = $("#start_date_from").val();
+			var start_date_to = $("#start_date_to").val();
+			var visa_class_id = $("#visa_class_id").val();
+			var location_range = 10;
+
+			var location_zipcode='';
+			var job_title='';
+			var naic_code=''; 
+			var create_date = undefined;
+			var post_end_date = undefined;
+			var h1b_data_series = "ALL";
+			var end_date_from = "mm/dd/yyyy";
+			var end_date_to = "mm/dd/yyyy";
+			var sidx = "create_date";
+			var _search = false;
+			var page = 1;
+			var nd = 1499959786410;
+
+			var link = "https://lcr-pjr.doleta.gov/index.cfm?event=ehLCJRExternal.dspQuickCertSearchGridData&&" +
+					"startSearch="+ startSearch + "&case_number=" + case_number + 
+					"&employer_business_name="+ employer_business_name + "&visa_class_id="+ visa_class_id + 
+					"&state_id="+ state_id + "&location_range="+ location_range + "&location_zipcode=" + 
+					location_zipcode + "&job_title="+ job_title + "&naic_code=" + naic_code + "&create_date="
+					+ create_date + "&post_end_date=" + post_end_date + "&h1b_data_series=" + h1b_data_series 
+					+ "&start_date_from=" + start_date_from + "&start_date_to=" + start_date_to + "&end_date_from="
+					+ end_date_from + "&end_date_to=" + end_date_to + "&nd=" + nd + "&page=" + page + "&rows=" + rows
+					+ "&sidx=" + sidx + "&sord=" + sord + "&nd="+ nd + "&_search="+ _search;
+			// console.log(link);
+
+			$.ajax({
+				type: "GET",
+				url: link,
+				dataType: 'json',
+				success: function(resp){
+					calling(resp);
+				},
+				error: function(resp){
+					console.log("failed");
+				}
+			});
+
+		})
+	</script>
+</body>
+</html>

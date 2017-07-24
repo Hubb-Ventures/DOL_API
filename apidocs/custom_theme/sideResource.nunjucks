@@ -1,0 +1,5 @@
+<li><a class="waves-effect waves-teal" href="#{{ resource.uniqueId}}">{% if resource.displayName %}{{ resource.displayName}}{% else %}{{ resource.relativeUri }}{% endif %}</a></li>
+
+{% for resource in resource.resources %}
+	{% include "./sideResource.nunjucks" %}
+{% endfor %}

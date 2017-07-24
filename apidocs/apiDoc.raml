@@ -1,0 +1,109 @@
+#%RAML 1.0
+title: Department Of Labor
+baseUri: http://localhost:8008
+
+traits: 
+  Timeout:
+    responses: 
+      408:
+        description: Request Timeout
+        body: 
+          application/json:
+            example:
+              {
+                msg: "Try again later"
+              }
+
+  success:
+    responses: 
+      200:
+        body: 
+          application/json:
+            example:
+              [
+                {
+                  caseNumber: "I-200-17103-576342",
+                  postingDate: "04/13/2017",
+                  caseType: "H-1B",
+                  status: "Certified",
+                  businessName: "OPENLOGIX CORPORATION",
+                  startDate: "04/13/2017",
+                  endDate: "09/12/2019",
+                  jobTitle: "SOFTWARE ENGINEER",
+                  state: "CALIFORNIA",
+                  documentURL: "https://lcr-pjr.doleta.gov/index.cfm?event=ehLCJRExternal.dspCert&doc_id=3&visa_class_id=1&id=5329156"
+                }
+              ]
+    is: Timeout
+
+/v1:
+  displayName: version 1
+  /casenumber/{caseNumber}:
+    description: Get Employee details by Case Number
+    get:
+      description: GET employee Details
+      responses: 
+        200:
+          description: Success
+          body: 
+            application/json:
+              example:
+                {
+                  caseNumber: "I-200-17103-576342",
+                  postingDate: "04/13/2017",
+                  caseType: "H-1B",
+                  status: "Certified",
+                  businessName: "OPENLOGIX CORPORATION",
+                  startDate: "04/13/2017",
+                  endDate: "09/12/2019",
+                  jobTitle: "SOFTWARE ENGINEER",
+                  state: "CALIFORNIA",
+                  documentURL: "https://lcr-pjr.doleta.gov/index.cfm?event=ehLCJRExternal.dspCert&doc_id=3&visa_class_id=1&id=5329156"
+                }
+    is: Timeout
+  
+  /employee/{employeeName}:
+    description: GET employer Detailsr
+    get:
+      description: GET Employer details
+      is: success
+  
+  /employee:
+    description: Get Employer Details with start and end endDates
+    post:
+      description: Get employer details with dates
+      headers:
+        startDate:
+          description: starting Date format mm/dd/yyyy
+          type: string
+          required: true
+          example: 01/01/2017
+        endDate:
+          description: starting Date format mm/dd/yyyy
+          type: string
+          required: true
+          example: 01/01/2017
+        employeeName:
+          description: Employer Name
+          type: string
+          required: true
+          example: openlogix
+      is: success
+
+  /employeeCase:
+    description: Get Employer with their case type
+    post:
+      description: Employer Details filtered by case type
+      headers:
+        employeeName:
+          description: Employer Name
+          type: string
+          required: true
+          example: openlogix
+        caseType:
+          description: Case Type can only be one of the following - All, PERM, H-1B, H-1B1 Chile, H-1B1 Singapore, E-3 Australian, H-2A, H-2B
+          type: string
+          enum: ["All", "PERM", "H-1B", "H-1B1 Chile", "H-1B1 Singapore", "E-3 Australian", "H-2A", "H-2B"]
+          required: true
+          example: All
+      is: success
