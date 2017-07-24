@@ -3,6 +3,7 @@ Detailed Documentation available in the apidocs folder
 
 # Department Of Labor APIs
 Host: http://localhost:8008
+
 Department of Labor API - Check iCert Status
 
 ---
