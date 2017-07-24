@@ -29,4 +29,8 @@ app.get('/', function(req, resp, next){
 	resp.render('index');
 });
 
+app.get('/api', function(req, resp, next){
+	resp.render('api');
+});
+
 app.use('/v1', versionRoute);
